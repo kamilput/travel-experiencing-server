@@ -1,9 +1,11 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import { registerRoutes } from './routes';
 
 const app = express();
 
 app.use(bodyParser.json());
+registerRoutes(app);
 
 const port = 4000;
 
