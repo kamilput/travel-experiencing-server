@@ -1,13 +1,13 @@
 import express from 'express';
 const tripRoutes = express.Router();
-import * as getTrip from './get';
-import * as postTrip from './post';
-import * as patchTrip from './patch';
-import * as deleteTrip from './delete';
+import getTrip from './get';
+import postTrip from './post';
+import patchTrip from './patch';
+import deleteTrip from './delete';
 
-tripRoutes.get('/admin/trip/:id', getTrip);
-tripRoutes.post('/admin/trip/create', postTrip);
-tripRoutes.patch('/admin/trip/:id', patchTrip);
-tripRoutes.delete('/admin/trip/:id', deleteTrip);
+tripRoutes.get('/', getTrip);
+tripRoutes.post('/', postTrip);
+tripRoutes.patch('/', patchTrip);
+tripRoutes.delete('/', deleteTrip);
 
 export { tripRoutes };
