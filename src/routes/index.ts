@@ -1,19 +1,11 @@
-import { Express } from 'express';
-import { postBooking, deleteBooking } from './booking';
-import { getTrip, postTrip, patchTrip, deleteTrip } from './trip';
-import { deleteUser } from './user';
+import express, { Express } from 'express';
+const apiRoutes = express.Router();
+import { bookingRoutes } from './booking';
+import { tripRoutes } from './trip';
+import { userRoutes } from './user';
 
 export const registerRoutes = (app: Express): void => {
-  const routes = [
-    postBooking,
-    deleteBooking,
-    getTrip,
-    postTrip,
-    patchTrip,
-    deleteTrip,
-    deleteUser,
-  ];
-  routes.forEach((route) => {
-    console.log('Route: ', route);
-  });
+  apiRoutes.use('/admin/trip', tripRoutes);
+  apiRoutes.use('/book', bookingRoutes);
+  apiRoutes.use('/admin/users', userRoutes);
 };
