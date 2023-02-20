@@ -5,9 +5,9 @@ import postTrip from './post';
 import patchTrip from './patch';
 import deleteTrip from './delete';
 
-tripRoutes.get('/', getTrip);
-tripRoutes.post('/', postTrip);
-tripRoutes.patch('/', patchTrip);
-tripRoutes.delete('/', deleteTrip);
+tripRoutes.use('/', getTrip);
+tripRoutes.use('/', postTrip);
+tripRoutes.use('/', patchTrip);
+tripRoutes.use('/', deleteTrip);
 
 export { tripRoutes };

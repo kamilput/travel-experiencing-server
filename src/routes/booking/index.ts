@@ -3,7 +3,7 @@ const bookingRoutes = express.Router();
 import deleteBooking from './delete';
 import postBooking from './post';
 
-bookingRoutes.post('/', postBooking);
-bookingRoutes.delete('/', deleteBooking);
+bookingRoutes.use('/', postBooking);
+bookingRoutes.use('/', deleteBooking);
 
 export { bookingRoutes };

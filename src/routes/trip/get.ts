@@ -1,10 +1,15 @@
 import express, { Request, Response } from 'express';
-const router = express.Router();
 import { fetchTrip } from '../../services/tripService';
 
+const router = express.Router();
+
 router.get('/:id', async (req: Request, res: Response) => {
-  const trip = await fetchTrip();
-  return res.json(trip);
+  try {
+    const trip = await fetchTrip();
+    return res.json(trip);
+  } catch (error) {
+    return res.status(500).json({ message: error });
+  }
 });
 
 export default router;

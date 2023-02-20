@@ -1,10 +1,15 @@
 import express, { Request, Response } from 'express';
-const router = express.Router();
 import { createTrip } from '../../services/tripService';
 
+const router = express.Router();
+
 router.post('/create', async (req: Request, res: Response) => {
-  const trip = await createTrip();
-  return res.json(trip);
+  try {
+    const trip = await createTrip();
+    return res.json(trip);
+  } catch (error) {
+    return res.status(500).json({ message: error });
+  }
 });
 
 export default router;

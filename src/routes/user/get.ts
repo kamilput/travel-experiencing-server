@@ -1,12 +1,12 @@
 import express, { Request, Response } from 'express';
-import { editTrip } from '../../services/tripService';
+import { getAllUsers } from '../../services/userService';
 
 const router = express.Router();
 
-router.patch('/:id', async (req: Request, res: Response) => {
+router.get('/', async (req: Request, res: Response) => {
   try {
-    const trip = await editTrip();
-    return res.json(trip);
+    const users = await getAllUsers();
+    return res.json(users);
   } catch (error) {
     return res.status(500).json({ message: error });
   }

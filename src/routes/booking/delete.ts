@@ -1,10 +1,15 @@
 import express from 'express';
-const router = express.Router();
 import { removeBooking } from '../../services/bookService';
 
+const router = express.Router();
+
 router.delete('/', async (req, res) => {
-  const booking = await removeBooking();
-  return res.json(booking);
+  try {
+    const booking = await removeBooking();
+    return res.json(booking);
+  } catch (error) {
+    return res.status(500).json({ message: error });
+  }
 });
 
 export default router;

@@ -1,11 +1,16 @@
 import express from 'express';
+import 'reflect-metadata';
 import bodyParser from 'body-parser';
 import { registerRoutes } from './routes';
+import { initializeDatabase } from './db';
 
 const app = express();
 
 app.use(bodyParser.json());
+
 registerRoutes(app);
+
+initializeDatabase();
 
 const port = 4000;
 

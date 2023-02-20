@@ -1,12 +1,12 @@
 import express, { Request, Response } from 'express';
-import { editTrip } from '../../services/tripService';
+import { getData } from '../../services/dataService';
 
 const router = express.Router();
 
-router.patch('/:id', async (req: Request, res: Response) => {
+router.get('/', async (req: Request, res: Response) => {
   try {
-    const trip = await editTrip();
-    return res.json(trip);
+    const data = await getData();
+    return res.json(data);
   } catch (error) {
     return res.status(500).json({ message: error });
   }
