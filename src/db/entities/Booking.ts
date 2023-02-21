@@ -1,4 +1,10 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Board,
+  Destinations,
+  Hotels,
+  TravelAgencies,
+} from '../../config/types';
 
 @Entity('Bookings')
 export class Booking {
@@ -9,22 +15,22 @@ export class Booking {
   name: string;
 
   @Column()
-  destination: string;
+  destination: Destinations;
 
   @Column()
-  board: string;
+  board: Board;
 
   @Column()
-  hotel: string;
+  hotel: Hotels;
 
   @Column()
-  travelAgency: string;
+  travelAgency: TravelAgencies;
 
-  @Column()
-  startDate: string;
+  @Column({ type: 'timestamptz' })
+  startDate: Date;
 
-  @Column()
-  endDate: string;
+  @Column({ type: 'timestamptz' })
+  endDate: Date;
 
   @Column()
   price: number;

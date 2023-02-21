@@ -1,6 +1,6 @@
 export const getAllUsers = () => {};
 
-export const removeUser = () => {};
+export const deleteUser = () => {};
 
 export const getUserTrips = () => {};
 

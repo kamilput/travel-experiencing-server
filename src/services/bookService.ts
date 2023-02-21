@@ -1,3 +1,3 @@
 export const createBooking = () => {};
 
-export const removeBooking = () => {};
+export const deleteBooking = () => {};

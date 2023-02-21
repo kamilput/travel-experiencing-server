@@ -4,4 +4,4 @@ export const createTrip = () => {};
 
 export const editTrip = () => {};
 
-export const removeTrip = () => {};
+export const deleteTrip = () => {};

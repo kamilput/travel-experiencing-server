@@ -1,6 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
 import { Trip } from './Trip';
-import { TravelAgency } from '../../config/types';
+import { TravelAgencies } from '../../config/types';
 
 @Entity('Users')
 export class User {
@@ -16,12 +16,17 @@ export class User {
   @Column()
   admin: boolean;
 
-  @Column()
-  travelAgency: TravelAgency | null;
+  @Column({ type: 'varchar', nullable: true })
+  travelAgency: TravelAgencies | null;
 
   @Column()
   googleUserId: string;
 
-  @OneToMany(() => Trip, (trip) => trip.user)
-  trips: Trip[];
+  @ManyToMany(() => Trip)
+  @JoinTable()
+  createdTrips: Trip[];
+
+  @ManyToMany(() => Trip)
+  @JoinTable()
+  bookedTrips: Trip[];
 }

@@ -1,4 +1,4 @@
-export type TravelAgency =
+export type TravelAgencies =
   | 'Super Travel'
   | 'Awesome Trips'
   | 'Astonishing Destinations'
@@ -21,3 +21,10 @@ export type Hotels =
   | 'Palm Beach Hotel';
 
 export type Destinations = 'Spain' | 'Italy' | 'Greece' | 'Turkey' | 'Thailand';
+
+export interface Data {
+  board: Board[];
+  destinations: Destinations[];
+  hotels: Hotels[];
+  travelAgencies: TravelAgencies[];
+}
