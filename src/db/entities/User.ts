@@ -1,11 +1,18 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 import { Trip } from './Trip';
 import { TravelAgencies } from '../../config/types';
 
 @Entity('Users')
 export class User {
   @PrimaryGeneratedColumn()
-  userId: number;
+  userId: string;
 
   @Column()
   name: string;
@@ -22,8 +29,7 @@ export class User {
   @Column()
   googleUserId: string;
 
-  @ManyToMany(() => Trip)
-  @JoinTable()
+  @OneToMany(() => Trip, (trip) => trip.user)
   createdTrips: Trip[];
 
   @ManyToMany(() => Trip)

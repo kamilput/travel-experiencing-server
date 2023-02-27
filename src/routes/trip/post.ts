@@ -5,7 +5,8 @@ const router = express.Router();
 
 router.post('/create', async (req: Request, res: Response) => {
   try {
-    const trip = await createTrip();
+    const { data } = req.body;
+    const trip = await createTrip(data);
     return res.json(trip);
   } catch (error) {
     return res.status(500).json({ message: error });

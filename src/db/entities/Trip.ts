@@ -10,7 +10,7 @@ import {
 @Entity('Trips')
 export class Trip {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Column()
   name: string;
@@ -42,6 +42,6 @@ export class Trip {
   @Column()
   description: string;
 
-  // @ManyToOne(() => User, (user) => user.trips)
-  // user: User;
+  @ManyToOne(() => User, (user) => user.createdTrips)
+  user: User;
 }

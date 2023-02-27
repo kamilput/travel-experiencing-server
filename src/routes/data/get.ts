@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { getData } from '../../services/dataService';
-import { data as configData } from "../../config";
+import { data as configData } from '../../config';
 
 const router = express.Router();
 

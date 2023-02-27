@@ -28,3 +28,17 @@ export interface Data {
   hotels: Hotels[];
   travelAgencies: TravelAgencies[];
 }
+
+export interface TripData {
+  tripName: string;
+  tripPrice: number;
+  tripBoard: Board;
+  tripDestination: Destinations;
+  tripHotel: Hotels;
+  tripTravelAgency: TravelAgencies;
+  tripImage: string;
+  tripStartDate: Date;
+  tripEndDate: Date;
+  tripDescription: string;
+  userId: string;
+}

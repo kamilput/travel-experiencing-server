@@ -5,7 +5,8 @@ const router = express.Router();
 
 router.delete('/:id', async (req: Request, res: Response) => {
   try {
-    const trip = await deleteTrip();
+    const { tripId, userId } = req.body;
+    const trip = await deleteTrip(tripId, userId);
     return res.json(trip);
   } catch (error) {
     return res.status(500).json({ message: error });
