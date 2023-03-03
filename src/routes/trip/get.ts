@@ -5,7 +5,8 @@ const router = express.Router();
 
 router.get('/:id', async (req: Request, res: Response) => {
   try {
-    const { tripId } = req.body;
+    // const { tripId } = req.body;
+    const tripId = req.params.id;
     const trip = await fetchTrip(tripId);
     return res.json(trip);
   } catch (error) {

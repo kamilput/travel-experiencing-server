@@ -118,8 +118,8 @@ const tripRepository = AppDataSource.getRepository(Trip);
 export const initializeDatabase = () => {
   AppDataSource.initialize()
     .then(async () => {
-      await userRepository.insert(users);
-      await tripRepository.insert(trips);
+      // await userRepository.insert(users);
+      // await tripRepository.insert(trips);
     })
     .catch((error) => console.log(error));
 };

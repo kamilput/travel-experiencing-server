@@ -10,5 +10,5 @@ export const registerRoutes = (app: Express): void => {
   app.use('/book', bookingRoutes);
   app.use('/admin/users', userRoutes);
   app.use('/users', usersRoutes);
-  app.use('data', dataRoutes);
+  app.use('/data', dataRoutes);
 };
