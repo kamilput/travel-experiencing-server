@@ -14,6 +14,17 @@ export const fetchTrip = async (tripId: string): Promise<Trip> => {
   return trip;
 };
 
+export const fetchAllTrips = async (): Promise<Trip[]> => {
+  const tripRepository = AppDataSource.getRepository(Trip);
+  const trips = await tripRepository.find();
+
+  if (trips.length === 0) {
+    throw Error;
+  }
+
+  return trips;
+};
+
 export const createTrip = async (data: TripData): Promise<InsertResult> => {
   const {
     tripName,
