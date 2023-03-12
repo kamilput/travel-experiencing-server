@@ -8,7 +8,7 @@ router.get('/', async (req: Request, res: Response) => {
     const users = await getAllUsers();
     return res.json(users);
   } catch (error) {
-    return res.status(500).json({ message: error });
+    return res.status(500).json(`error in fetching all users, ${error}`);
   }
 });
 

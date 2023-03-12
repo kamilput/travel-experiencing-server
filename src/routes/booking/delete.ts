@@ -9,7 +9,7 @@ router.delete('/', async (req, res) => {
     const booking = await deleteBooking(userId, tripId);
     return res.json(booking);
   } catch (error) {
-    return res.status(500).json({ message: error });
+    return res.status(500).json(`error in deleting booking, ${error}`);
   }
 });
 

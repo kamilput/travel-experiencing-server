@@ -1,7 +1,7 @@
 import express from 'express';
-const dataRoutes = express.Router();
-
 import getData from './get';
+
+const dataRoutes = express.Router();
 
 dataRoutes.use('/', getData);
 

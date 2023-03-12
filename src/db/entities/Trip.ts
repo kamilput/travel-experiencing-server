@@ -13,34 +13,34 @@ export class Trip {
   id: string;
 
   @Column()
-  name: string;
+  tripName: string;
 
   @Column()
-  destination: Destinations;
+  tripDestination: Destinations;
 
   @Column()
-  board: Board;
+  tripBoard: Board;
 
   @Column()
-  hotel: Hotels;
+  tripHotel: Hotels;
 
   @Column()
-  travelAgency: TravelAgencies;
+  tripTravelAgency: TravelAgencies;
 
   @Column({ type: 'timestamptz' })
-  startDate: Date;
+  tripStartDate: Date;
 
   @Column({ type: 'timestamptz' })
-  endDate: Date;
+  tripEndDate: Date;
 
   @Column()
-  price: number;
+  tripPrice: number;
 
   @Column()
-  image: string;
+  tripImage: string;
 
   @Column()
-  description: string;
+  tripDescription: string;
 
   @ManyToOne(() => User, (user) => user.createdTrips)
   user: User;

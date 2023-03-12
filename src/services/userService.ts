@@ -10,37 +10,53 @@ export const getAllUsers = async (): Promise<User[]> => {
 
 export const deleteUser = async (userId: string): Promise<User> => {
   const userRepository = AppDataSource.getRepository(User);
-  const user = await userRepository.findOneBy({ userId: userId });
+  const user = await userRepository.findOneBy({ id: userId });
 
   if (!user) {
-    throw Error;
+    throw new Error('no user');
   }
 
-  return userRepository.remove(user);
+  return await userRepository.remove(user);
 };
 
 export const getUserTrips = async (userId: string): Promise<Trip[]> => {
-  const userRepository = AppDataSource.getRepository(User);
-  const user = await userRepository.findOneBy({ userId: userId });
+  const tripRepository = AppDataSource.getRepository(Trip);
 
-  if (!user) {
-    throw Error;
+  const trips = await tripRepository.find({
+    relations: {
+      user: true,
+    },
+    where: {
+      user: {
+        id: userId,
+      },
+    },
+  });
+
+  if (!trips) {
+    throw new Error('no trips');
   }
 
-  const userTrips = user.createdTrips;
-
-  return userTrips;
+  return trips;
 };
 
-export const getUserBookings = async (userId: string) => {
+export const getUserBookings = async (userId: string): Promise<Trip[]> => {
   const userRepository = AppDataSource.getRepository(User);
-  const user = await userRepository.findOneBy({ userId: userId });
+
+  const user = await userRepository.findOne({
+    where: {
+      id: userId,
+    },
+    relations: {
+      bookedTrips: true,
+    },
+  });
 
   if (!user) {
-    throw Error;
+    throw new Error('no user');
   }
 
-  const userBookings = user.bookedTrips;
+  const bookings = user.bookedTrips;
 
-  return userBookings;
+  return bookings;
 };

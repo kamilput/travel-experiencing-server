@@ -9,7 +9,7 @@ router.post('/', async (req, res) => {
     const booking = await createBooking(userId, tripId);
     return res.json(booking);
   } catch (error) {
-    return res.status(500).json({ message: error });
+    return res.status(500).json(`error in adding booking, ${error}`);
   }
 });
 

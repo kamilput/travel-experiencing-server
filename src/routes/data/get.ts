@@ -9,7 +9,7 @@ router.get('/', async (req: Request, res: Response) => {
     const data = await getData(configData);
     return res.json(data);
   } catch (error) {
-    return res.status(500).json({ message: error });
+    return res.status(500).json(`error in getting data, ${error}`);
   }
 });
 

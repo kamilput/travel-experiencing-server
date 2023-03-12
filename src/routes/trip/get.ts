@@ -1,16 +1,15 @@
 import express, { Request, Response } from 'express';
-import {fetchAllTrips, fetchTrip} from '../../services/tripService';
+import { fetchAllTrips, fetchTrip } from '../../services/tripService';
 
 const router = express.Router();
 
-router.get('/:id', async (req: Request, res: Response) => {
+router.get('/:tripId', async (req: Request, res: Response) => {
   try {
-    // const { tripId } = req.body;
-    const tripId = req.params.id;
+    const { tripId } = req.params;
     const trip = await fetchTrip(tripId);
     return res.json(trip);
   } catch (error) {
-    return res.status(500).json({ message: error });
+    return res.status(500).json(`error in fetching single trip, ${error}`);
   }
 });
 
@@ -19,7 +18,7 @@ router.get('/', async (req: Request, res: Response) => {
     const trip = await fetchAllTrips();
     return res.json(trip);
   } catch (error) {
-    return res.status(500).json({ message: error });
+    return res.status(500).json(`error in fetching all trips, ${error}`);
   }
 });
 

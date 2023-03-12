@@ -12,7 +12,7 @@ import { TravelAgencies } from '../../config/types';
 @Entity('Users')
 export class User {
   @PrimaryGeneratedColumn()
-  userId: string;
+  id: string;
 
   @Column()
   name: string;

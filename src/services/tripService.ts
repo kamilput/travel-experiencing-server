@@ -1,4 +1,3 @@
-import { InsertResult } from 'typeorm';
 import { AppDataSource } from '../db/data-source';
 import { User, Trip } from '../db/entities';
 import { TripData } from '../config/types';
@@ -8,7 +7,7 @@ export const fetchTrip = async (tripId: string): Promise<Trip> => {
   const trip = await tripRepository.findOneBy({ id: tripId });
 
   if (!trip) {
-    throw Error;
+    throw new Error('no trip');
   }
 
   return trip;
@@ -19,13 +18,13 @@ export const fetchAllTrips = async (): Promise<Trip[]> => {
   const trips = await tripRepository.find();
 
   if (trips.length === 0) {
-    throw Error;
+    throw new Error('no trips');
   }
 
   return trips;
 };
 
-export const createTrip = async (data: TripData): Promise<InsertResult> => {
+export const createTrip = async (data: TripData): Promise<Trip> => {
   const {
     tripName,
     tripPrice,
@@ -41,29 +40,28 @@ export const createTrip = async (data: TripData): Promise<InsertResult> => {
   } = data;
   const tripRepository = AppDataSource.getRepository(Trip);
   const userRepository = AppDataSource.getRepository(User);
-  const user = await userRepository.findOneBy({ userId: userId });
+  const user = await userRepository.findOneBy({ id: userId });
 
   if (!user) {
-    throw Error;
+    throw new Error('no user');
   }
 
   const trip = new Trip();
-  trip.name = tripName;
-  trip.destination = tripDestination;
-  trip.board = tripBoard;
-  trip.hotel = tripHotel;
-  trip.travelAgency = tripTravelAgency;
-  trip.startDate = tripStartDate;
-  trip.endDate = tripEndDate;
-  trip.price = tripPrice;
-  trip.description = tripDescription;
-  trip.image = tripImage;
+  trip.tripName = tripName;
+  trip.tripDestination = tripDestination;
+  trip.tripBoard = tripBoard;
+  trip.tripHotel = tripHotel;
+  trip.tripTravelAgency = tripTravelAgency;
+  trip.tripStartDate = tripStartDate;
+  trip.tripEndDate = tripEndDate;
+  trip.tripPrice = tripPrice;
+  trip.tripDescription = tripDescription;
+  trip.tripImage = tripImage;
   trip.user = user;
 
-  user.createdTrips.push(trip);
-  // await AppDataSource.manager.save(user);
-  await userRepository.save(user);
-  return await tripRepository.insert(trip);
+  await tripRepository.insert(trip);
+
+  return trip;
 };
 
 export const editTrip = async (
@@ -81,46 +79,35 @@ export const editTrip = async (
     tripStartDate,
     tripEndDate,
     tripDescription,
-    userId,
   } = data;
   const tripRepository = AppDataSource.getRepository(Trip);
   const trip = await tripRepository.findOneBy({ id: tripId });
 
   if (!trip) {
-    throw Error;
+    throw new Error('no trip');
   }
 
-  trip.name = tripName;
-  trip.destination = tripDestination;
-  trip.board = tripBoard;
-  trip.hotel = tripHotel;
-  trip.travelAgency = tripTravelAgency;
-  trip.startDate = tripStartDate;
-  trip.endDate = tripEndDate;
-  trip.price = tripPrice;
-  trip.description = tripDescription;
-  trip.image = tripImage;
+  trip.tripName = tripName;
+  trip.tripDestination = tripDestination;
+  trip.tripBoard = tripBoard;
+  trip.tripHotel = tripHotel;
+  trip.tripTravelAgency = tripTravelAgency;
+  trip.tripStartDate = tripStartDate;
+  trip.tripEndDate = tripEndDate;
+  trip.tripPrice = tripPrice;
+  trip.tripDescription = tripDescription;
+  trip.tripImage = tripImage;
 
   return await tripRepository.save(trip);
 };
 
-export const deleteTrip = async (
-  tripId: string,
-  userId: string
-): Promise<Trip> => {
+export const deleteTrip = async (tripId: string): Promise<Trip> => {
   const tripRepository = AppDataSource.getRepository(Trip);
-  const userRepository = AppDataSource.getRepository(User);
   const trip = await tripRepository.findOneBy({ id: tripId });
-  const user = await userRepository.findOneBy({ userId: userId });
 
-  if (!trip || !user) {
-    throw Error;
+  if (!trip) {
+    throw new Error('no trip');
   }
 
-  user.createdTrips.filter((bookedTrip) => {
-    return bookedTrip.id !== tripId;
-  });
-
-  await userRepository.save(user);
   return await tripRepository.remove(trip);
 };

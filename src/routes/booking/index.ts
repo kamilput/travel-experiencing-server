@@ -1,7 +1,8 @@
 import express from 'express';
-const bookingRoutes = express.Router();
 import deleteBooking from './delete';
 import postBooking from './post';
+
+const bookingRoutes = express.Router();
 
 bookingRoutes.use('/', postBooking);
 bookingRoutes.use('/', deleteBooking);

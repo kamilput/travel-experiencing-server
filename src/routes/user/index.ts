@@ -1,7 +1,8 @@
 import express from 'express';
-const userRoutes = express.Router();
 import deleteRouter from './delete';
 import getRouter from './get';
+
+const userRoutes = express.Router();
 
 userRoutes.use('/', getRouter);
 userRoutes.use('/', deleteRouter);

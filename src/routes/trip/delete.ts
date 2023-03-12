@@ -3,13 +3,13 @@ import { deleteTrip } from '../../services/tripService';
 
 const router = express.Router();
 
-router.delete('/:id', async (req: Request, res: Response) => {
+router.delete('/:tripId', async (req: Request, res: Response) => {
   try {
-    const { tripId, userId } = req.body;
-    const trip = await deleteTrip(tripId, userId);
+    const { tripId } = req.params;
+    const trip = await deleteTrip(tripId);
     return res.json(trip);
   } catch (error) {
-    return res.status(500).json({ message: error });
+    return res.status(500).json(`error in deleting trip, ${error}`);
   }
 });
 

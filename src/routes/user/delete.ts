@@ -3,13 +3,13 @@ import { deleteUser } from '../../services/userService';
 
 const router = express.Router();
 
-router.delete('/', async (req: Request, res: Response) => {
+router.delete('/:userId', async (req: Request, res: Response) => {
   try {
-    const { userId } = req.body;
+    const { userId } = req.params;
     const user = await deleteUser(userId);
     return res.json(user);
   } catch (error) {
-    return res.status(500).json({ message: error });
+    return res.status(500).json(`error in deleting user, ${error}`);
   }
 });
 

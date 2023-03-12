@@ -7,14 +7,26 @@ export const createBooking = async (
 ): Promise<User> => {
   const userRepository = AppDataSource.getRepository(User);
   const tripRepository = AppDataSource.getRepository(Trip);
-  const user = await userRepository.findOneBy({ userId: userId });
+
+  const user = await userRepository.findOne({
+    where: {
+      id: userId,
+    },
+    relations: {
+      bookedTrips: true,
+    },
+  });
   const bookedTrip = await tripRepository.findOneBy({ id: tripId });
 
   if (!bookedTrip || !user) {
-    throw Error;
+    throw new Error('no user or booked trip');
   }
 
-  user.bookedTrips.push(bookedTrip);
+  try {
+    user.bookedTrips.push(bookedTrip);
+  } catch (error) {
+    console.log(`create error ${JSON.stringify(error)}`);
+  }
 
   return await userRepository.save(user);
 };
@@ -24,15 +36,25 @@ export const deleteBooking = async (
   tripId: string
 ): Promise<User> => {
   const userRepository = AppDataSource.getRepository(User);
-  const user = await userRepository.findOneBy({ userId: userId });
+  const tripRepository = AppDataSource.getRepository(Trip);
 
-  if (!user) {
-    throw Error;
+  const user = await userRepository.findOne({
+    where: {
+      id: userId,
+    },
+    relations: {
+      bookedTrips: true,
+    },
+  });
+  const bookedTripToRemove = await tripRepository.findOneBy({ id: tripId });
+
+  if (!bookedTripToRemove || !user) {
+    throw new Error('no user or booked trip');
   }
 
-  user.bookedTrips.filter((bookedTrip) => {
-    return bookedTrip.id !== tripId;
-  });
+  user.bookedTrips.filter(
+    (bookedTrip) => bookedTrip.id !== bookedTripToRemove.id
+  );
 
   return await userRepository.save(user);
 };
