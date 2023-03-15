@@ -40,5 +40,5 @@ export interface TripData {
   tripStartDate: Date;
   tripEndDate: Date;
   tripDescription: string;
-  userId: string;
+  userId?: string;
 }

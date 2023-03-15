@@ -80,6 +80,7 @@ export const editTrip = async (
     tripEndDate,
     tripDescription,
   } = data;
+
   const tripRepository = AppDataSource.getRepository(Trip);
   const trip = await tripRepository.findOneBy({ id: tripId });
 

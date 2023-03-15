@@ -3,9 +3,9 @@ import { deleteBooking } from '../../services/bookService';
 
 const router = express.Router();
 
-router.delete('/', async (req, res) => {
+router.delete('/:userId/:tripId', async (req, res) => {
   try {
-    const { userId, tripId } = req.body;
+    const { userId, tripId } = req.params;
     const booking = await deleteBooking(userId, tripId);
     return res.json(booking);
   } catch (error) {

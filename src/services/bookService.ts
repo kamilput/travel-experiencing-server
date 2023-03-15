@@ -52,7 +52,7 @@ export const deleteBooking = async (
     throw new Error('no user or booked trip');
   }
 
-  user.bookedTrips.filter(
+  user.bookedTrips = user.bookedTrips.filter(
     (bookedTrip) => bookedTrip.id !== bookedTripToRemove.id
   );
 
