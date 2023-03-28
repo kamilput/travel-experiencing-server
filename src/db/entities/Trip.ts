@@ -42,6 +42,8 @@ export class Trip {
   @Column()
   tripDescription: string;
 
-  @ManyToOne(() => User, (user) => user.createdTrips)
+  @ManyToOne(() => User, (user) => user.createdTrips, {
+    onDelete: 'CASCADE',
+  })
   user: User;
 }

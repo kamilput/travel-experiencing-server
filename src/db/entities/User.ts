@@ -29,10 +29,14 @@ export class User {
   @Column()
   googleUserId: string;
 
-  @OneToMany(() => Trip, (trip) => trip.user)
+  @OneToMany(() => Trip, (trip) => trip.user, {
+    cascade: ['remove'],
+  })
   createdTrips: Trip[];
 
-  @ManyToMany(() => Trip)
+  @ManyToMany(() => Trip, {
+    cascade: true,
+  })
   @JoinTable()
   bookedTrips: Trip[];
 }
