@@ -1,11 +1,23 @@
 import { AppDataSource } from '../db/data-source';
 import { User, Trip } from '../db/entities';
+import { ServerError } from '../error/serverError';
 
 export const getAllUsers = async (): Promise<User[]> => {
   const userRepository = AppDataSource.getRepository(User);
   const users = await userRepository.find();
 
   return users;
+};
+
+export const getUser = async (userGoogleId: string): Promise<User> => {
+  const userRepository = AppDataSource.getRepository(User);
+  const user = await userRepository.findOneBy({ googleUserId: userGoogleId });
+
+  if (!user) {
+    throw new ServerError('Not logged in user', 401);
+  }
+
+  return user;
 };
 
 export const deleteUser = async (userId: string): Promise<User> => {
