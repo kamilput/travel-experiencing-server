@@ -6,31 +6,46 @@ import { ServerError } from '../error/serverError';
 
 dotenv.config();
 
-export const verifyToken = async (authorizationHeaders: any) => {
-  const authToken = authorizationHeaders || '';
-  const match = authToken.match(/Bearer (.+)/);
+export const verifyToken = async (token: any) => {
+  const { access_token, token_type } = token;
+  const match = token_type === 'Bearer';
 
   if (!match) {
     throw new ServerError('Authorization error', 401);
   }
 
-  const [, accessToken] = match;
-
   const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-  const ticket = await client.verifyIdToken({
-    idToken: accessToken,
-    audience: process.env.GOOGLE_CLIENT_ID,
-  });
-  const payload = ticket.getPayload();
-  const userGoogleId = payload?.['sub'];
+  const tokenInfo = await client.getTokenInfo(access_token);
 
-  return userGoogleId;
+  // const ticket = await client.verifyIdToken({
+  //   idToken: access_token,
+  //   audience: process.env.GOOGLE_CLIENT_ID,
+  // });
+  //
+  // const payload = ticket.getPayload();
+  // const userGoogleId = payload?.['sub'];
+
+  const { email, sub } = tokenInfo;
+
+  if (!email || !sub) {
+    throw new ServerError('Authorization error', 401);
+  }
+
+  const userData = {
+    // name,
+    email,
+    sub,
+  };
+
+  return userData;
 };
 
-export const getOrRegisterUser = async (userGoogleId: any) => {
+export const getOrRegisterUser = async (userData: any) => {
+  const { email, sub } = userData;
+
   const userRepository = await AppDataSource.getRepository(User);
-  const user = await userRepository.findOneBy({ googleUserId: userGoogleId });
+  const user = await userRepository.findOneBy({ googleUserId: sub });
 
   if (user) {
     return user;
@@ -38,7 +53,11 @@ export const getOrRegisterUser = async (userGoogleId: any) => {
 
   const newUser = new User();
 
-  // TODO fill in user data
+  newUser.name = 'TEST';
+  newUser.email = email;
+  newUser.admin = false;
+  newUser.travelAgency = null;
+  newUser.googleUserId = sub;
 
   await userRepository.insert(newUser);
 

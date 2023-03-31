@@ -8,10 +8,10 @@ export const userAuth = async (
   next: NextFunction
 ) => {
   // const token = req.headers.authorization || '';
-  // const verifiedAccessToken = await verifyToken(token);
-  // if (!verifiedAccessToken) {
-  //   throw new ServerError('Not logged in', 401);
-  // }
+  const verifiedAccessToken = await verifyToken(req.body);
+  if (!verifiedAccessToken) {
+    throw new ServerError('Not logged in', 401);
+  }
 
   next();
 };
