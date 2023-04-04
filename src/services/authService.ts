@@ -33,26 +33,3 @@ export const verifyToken = async (token: string = '') => {
 
   return userData;
 };
-
-export const getOrRegisterUser = async (userData: any) => {
-  const { name, email, sub } = userData;
-
-  const userRepository = await AppDataSource.getRepository(User);
-  const user = await userRepository.findOneBy({ googleUserId: sub });
-
-  if (user) {
-    return user;
-  }
-
-  const newUser = new User();
-
-  newUser.name = name;
-  newUser.email = email;
-  newUser.admin = false;
-  newUser.travelAgency = null;
-  newUser.googleUserId = sub;
-
-  await userRepository.insert(newUser);
-
-  return newUser;
-};

@@ -14,7 +14,7 @@ export const getUser = async (userGoogleId: string): Promise<User> => {
   const user = await userRepository.findOneBy({ googleUserId: userGoogleId });
 
   if (!user) {
-    throw new ServerError('Not logged in user', 401);
+    throw new ServerError('User does not exist', 401);
   }
 
   return user;
@@ -71,4 +71,27 @@ export const getUserBookings = async (userId: string): Promise<Trip[]> => {
   const bookings = user.bookedTrips;
 
   return bookings;
+};
+
+export const getOrRegisterUser = async (userData: any) => {
+  const { name, email, sub } = userData;
+
+  const userRepository = await AppDataSource.getRepository(User);
+  const user = await userRepository.findOneBy({ googleUserId: sub });
+
+  if (user) {
+    return user;
+  }
+
+  const newUser = new User();
+
+  newUser.name = name;
+  newUser.email = email;
+  newUser.admin = false;
+  newUser.travelAgency = null;
+  newUser.googleUserId = sub;
+
+  await userRepository.insert(newUser);
+
+  return newUser;
 };
