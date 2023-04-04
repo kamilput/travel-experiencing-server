@@ -8,13 +8,18 @@ export const adminAuth = async (
   res: Response,
   next: NextFunction
 ) => {
-  // const token = req.headers.authorization || '';
-  const { sub } = await verifyToken(req.body);
-  const user = await getUser(sub);
+  const token = req.headers.authorization || '';
+  const verifiedAccessToken = await verifyToken(token);
+
+  if (!verifiedAccessToken) {
+    return res.status(401);
+  }
+
+  const user = await getUser(verifiedAccessToken.sub);
   const isAdmin = user.admin;
 
   if (!isAdmin) {
-    throw new ServerError('Not manager', 401);
+    return res.status(401);
   }
 
   next();

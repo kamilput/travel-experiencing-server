@@ -5,8 +5,7 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
   try {
-    // const userGoogleId = await verifyToken(req.headers.authorization);
-    const userData = await verifyToken(req.body);
+    const userData = await verifyToken(req.headers.authorization);
     const user = await getOrRegisterUser(userData);
     return res.json(user);
   } catch (error) {

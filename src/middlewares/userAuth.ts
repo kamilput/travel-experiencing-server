@@ -7,10 +7,11 @@ export const userAuth = async (
   res: Response,
   next: NextFunction
 ) => {
-  // const token = req.headers.authorization || '';
-  const verifiedAccessToken = await verifyToken(req.body);
+  const token = req.headers.authorization ?? '';
+  const verifiedAccessToken = await verifyToken(token);
+
   if (!verifiedAccessToken) {
-    throw new ServerError('Not logged in', 401);
+    return res.status(401);
   }
 
   next();
