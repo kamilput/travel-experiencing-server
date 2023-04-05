@@ -1,6 +1,7 @@
 import { AppDataSource } from '../db/data-source';
 import { User, Trip } from '../db/entities';
 import { ServerError } from '../error/serverError';
+import { TokenUserData } from './types';
 
 export const getAllUsers = async (): Promise<User[]> => {
   const userRepository = AppDataSource.getRepository(User);
@@ -73,8 +74,14 @@ export const getUserBookings = async (userId: string): Promise<Trip[]> => {
   return bookings;
 };
 
-export const getOrRegisterUser = async (userData: any) => {
-  const { name, email, sub } = userData;
+export const getOrRegisterUser = async (
+  userData: TokenUserData | null
+): Promise<User | null> => {
+  if (!userData) {
+    return null;
+  }
+
+  const { name, email, sub } = userData ?? {};
 
   const userRepository = await AppDataSource.getRepository(User);
   const user = await userRepository.findOneBy({ googleUserId: sub });

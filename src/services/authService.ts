@@ -1,12 +1,13 @@
 import * as dotenv from 'dotenv';
 import { OAuth2Client } from 'google-auth-library';
-import { AppDataSource } from '../db/data-source';
-import { User } from '../db/entities';
 import { ServerError } from '../error/serverError';
+import { TokenUserData } from './types';
 
 dotenv.config();
 
-export const verifyToken = async (token: string = '') => {
+export const verifyToken = async (
+  token: string = ''
+): Promise<TokenUserData | null> => {
   const match = token.match(/Bearer (.+)/);
 
   if (!match) {
