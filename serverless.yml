@@ -1,0 +1,18 @@
+service: RestApi
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+functions:
+  api:
+    handler: src/app.handler
+    events:
+      - httpApi: '*'
+    environment:
+      variable1: value1
+
+package:
+  exclude:
+    - node_modules/**

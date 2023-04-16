@@ -95,7 +95,7 @@ export const getOrRegisterUser = async (
   newUser.name = name;
   newUser.email = email;
   newUser.admin = false;
-  newUser.travelAgency = null;
+  newUser.travelAgency = 'Awesome Trips';
   newUser.googleUserId = sub;
 
   await userRepository.insert(newUser);
