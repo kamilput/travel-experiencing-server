@@ -2,8 +2,10 @@ import express from 'express';
 import 'reflect-metadata';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import { registerRoutes } from './routes';
-import { initializeDatabase } from './db';
+// import { registerRoutes } from './src/routes';
+// import { initializeDatabase } from './src/db';
+import {registerRoutes} from "./routes";
+import {initializeDatabase} from "./db";
 
 const app = express();
 
@@ -14,7 +16,7 @@ registerRoutes(app);
 
 initializeDatabase();
 
-const port = 4000;
+const port = 8080;
 
 app.get('/', (req, res) => {
   res.send('Server is running properly!');

@@ -16,6 +16,7 @@ router.post('/', async (req: Request, res: Response) => {
       tripEndDate,
       tripImage,
       tripDescription,
+      userId,
     } = req.body;
     const trip = await createTrip({
       tripName,
@@ -28,6 +29,7 @@ router.post('/', async (req: Request, res: Response) => {
       tripEndDate,
       tripImage,
       tripDescription,
+      userId,
     });
     return res.json(trip);
   } catch (error) {
