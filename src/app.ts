@@ -1,4 +1,3 @@
-// const serverless = require("serverless-http");
 import express from 'express';
 import 'reflect-metadata';
 import bodyParser from 'body-parser';
@@ -26,5 +25,3 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
-
-// module.exports.handler = serverless(app);
